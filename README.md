@@ -25,6 +25,6 @@ Lanmp-mm 是基于Shell 语言编写的，能在linux环境下自动安装Apache
 
 ### 联系方式
 
-> Email：[jar-c@163.com](jar-c@163.com)
+Email：jar-c@163.com
+QQ：411835506 
 > Blog： [凹凸曼博客](http://www.apoyl.com)
-> QQ：411835506
