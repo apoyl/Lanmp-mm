@@ -13,9 +13,9 @@ logdir=${pwddir}/log
 etcdir=${pwddir}/etc
 
 #默认安装数据库
-dbdir=${installdir}/mysql
+dbdir=${installdir}/db/mysql
 #默认站点 如修改这个 需要修改对应的php.ini nginx.conf 文件
-sitedir=${installdir}/localhost
+sitedir=${installdir}/www/localhost
 
 #run=(re2c013 libmcrypt25)
 #手动安装 
@@ -34,13 +34,13 @@ re2c013rule=("yum -y install make tar gcc","[  -z `rpm -qa 're2c'` ] || break","
 #libmcrypt25
 libmcrypt25rule=("yum -y install make tar gcc gcc-c++","[  -z `rpm -qa 'libmcrypt'` ] || break","./configure","make&&make install")
 #nginx
-nginx16rule=("yum -y install make tar gcc libtool* zlib-devel pcre-devel","./configure --prefix=${installdir}/nginx  --with-http_realip_module  --with-http_addition_module  --with-http_sub_module --with-http_secure_link_module  --with-http_gzip_static_module  --with-http_stub_status_module  --without-http_ssi_module --with-pcre","make && make install","mkdir -p /data/logs && mkdir -p ${sitedir} ","echo 'yes' | cp  ${etcdir}/nginx.conf ${installdir}/nginx/conf/nginx.conf","cp ${etcdir}/index.php ${sitedir} && groupadd www || echo 0 && useradd -r  -g www www ||echo 0","usermod -s /sbin/nologin www")
+nginx16rule=("yum -y install make tar gcc libtool* zlib-devel pcre-devel","./configure --prefix=${installdir}/nginx  --with-http_realip_module  --with-http_addition_module  --with-http_sub_module --with-http_secure_link_module  --with-http_gzip_static_module  --with-http_stub_status_module  --without-http_ssi_module --with-pcre","make && make install","mkdir -p ${sitedir} ","echo 'yes' | cp  ${etcdir}/nginx.conf ${installdir}/nginx/conf/nginx.conf","source ../../../scode/modnginx.sh","cp ${etcdir}/index.php ${sitedir} && groupadd www || echo 0 && useradd -r  -g www www ||echo 0","usermod -s /sbin/nologin www")
 #apache
 apache22rule=("yum -y install make tar gcc gcc-c++ libtool* zlib-devel ntp perl apr apr-util","./configure --prefix=${installdir}/apache2 --enable-so --enable-rewrite","make&&make install","mkdir -p ${sitedir}","cp ${etcdir}/index.php ${sitedir}","cp ${installdir}/apache2/conf/httpd.conf ${installdir}/apache2/conf/httpdbak.conf","source ../../../scode/modhttpd.sh")
 
 #mysql模板
-mysql50rule=("yum -y install tar","mkdir -p ${installdir}/mysql && cp -rp ./ ${installdir}/mysql","source ../../../scode/mysqllib.sh","groupadd mysql ||echo 0","useradd  -r -g  mysql mysql || echo 0"," usermod -s /sbin/nologin mysql","cd ${installdir}/mysql","chown -R mysql:mysql .","cp ${etcdir}/my-large.cnf ./my.cnf","mkdir -p ${dbdir} && ./scripts/mysql_install_db --user=mysql --datadir=${dbdir} --defaults-file=${installdir}/mysql/my.cnf","chown -R root:root . && chown -R  mysql:mysql ${dbdir}")
-mysql51rule=("yum -y install tar","mkdir -p ${installdir}/mysql && cp -rp ./ ${installdir}/mysql","source ../../../scode/mysqllib.sh","groupadd mysql ||echo 0","useradd  -r -g  mysql mysql || echo 0","usermod -s /sbin/nologin mysql","cd ${installdir}/mysql","chown -R mysql:mysql .","cp ${etcdir}/my-large.cnf ./my.cnf","mkdir -p ${dbdir} && ./scripts/mysql_install_db --user=mysql --datadir=${dbdir} --defaults-file=${installdir}/mysql/my.cnf","chown -R root:root . && chown -R  mysql:mysql ${dbdir}")
+mysql50rule=("yum -y install tar","mkdir -p ${installdir}/mysql && cp -rp ./ ${installdir}/mysql","source ../../../scode/modmysql.sh","groupadd mysql ||echo 0","useradd  -r -g  mysql mysql || echo 0"," usermod -s /sbin/nologin mysql","cd ${installdir}/mysql","chown -R mysql:mysql .","cp ${etcdir}/my-large.cnf ./my.cnf","mkdir -p ${dbdir} && ./scripts/mysql_install_db --user=mysql --datadir=${dbdir} --defaults-file=${installdir}/mysql/my.cnf","chown -R root:root . && chown -R  mysql:mysql ${dbdir}")
+mysql51rule=("yum -y install tar","mkdir -p ${installdir}/mysql && cp -rp ./ ${installdir}/mysql","source ../../../scode/modmysql.sh","groupadd mysql ||echo 0","useradd  -r -g  mysql mysql || echo 0","usermod -s /sbin/nologin mysql","cd ${installdir}/mysql","chown -R mysql:mysql .","cp ${etcdir}/my-large.cnf ./my.cnf","mkdir -p ${dbdir} && ./scripts/mysql_install_db --user=mysql --datadir=${dbdir} --defaults-file=${installdir}/mysql/my.cnf","chown -R root:root . && chown -R  mysql:mysql ${dbdir}")
 #php+nginx
 php54rule=("yum -y install make tar gcc gcc-c++ libtool*  sed flex bison m4 autoconf automake gd-devel libjpeg-devel freetype-devel fontconfig-devel libpng-devel libtiff-devel libmcrypt-devel pcre-devel zlib-devel libevent-devel bzip2-devel php-mbstring libxml2 libxml2-devel","./configure --prefix=${installdir}/php  \
         --with-config-file-path=${installdir}/php/etc \
@@ -54,7 +54,7 @@ php54rule=("yum -y install make tar gcc gcc-c++ libtool*  sed flex bison m4 auto
         --disable-debug --with-mcrypt --enable-pcntl \
         --enable-sigchild  --enable-sysvmsg \
         --enable-pdo  --with-pdo-mysql --enable-fpm \
-	","make && make install","cp ${etcdir}/php.ini ${installdir}/php/etc/php.ini &&  cp ${etcdir}/php-fpm.conf ${installdir}/php/etc/php-fpm.conf #&& cp ./sapi/fpm/php-fpm ${installdir}/php/bin","groupadd www || echo 0 && useradd -r  -g www www || echo 0 ","usermod -s /sbin/nologin www")
+	","make && make install","cp ${etcdir}/php.ini ${installdir}/php/etc/php.ini &&  cp ${etcdir}/php-fpm.conf ${installdir}/php/etc/php-fpm.conf #&& cp ./sapi/fpm/php-fpm ${installdir}/php/bin","source ../../../scode/modphp.sh","groupadd www || echo 0 && useradd -r  -g www www || echo 0 ","usermod -s /sbin/nologin www")
 
 #php+apache22
 phpap54rule=("yum -y install make tar gcc gcc-c++ libtool*  sed flex bison m4 autoconf automake gd-devel libjpeg-devel freetype-devel fontconfig-devel libpng-devel libtiff-devel libmcrypt-devel pcre-devel zlib-devel libevent-devel bzip2-devel php-mbstring libxml2 libxml2-devel","./configure --prefix=${installdir}/php  \
@@ -70,5 +70,5 @@ phpap54rule=("yum -y install make tar gcc gcc-c++ libtool*  sed flex bison m4 au
         --disable-debug --with-mcrypt --enable-pcntl \
         --enable-sigchild  --enable-sysvmsg \
         --enable-pdo  --with-pdo-mysql \
-        ","make  && make install","cp ${etcdir}/php.ini ${installdir}/php/etc/php.ini")
+        ","make  && make install","cp ${etcdir}/php.ini ${installdir}/php/etc/php.ini","source ../../../scode/modphp.sh")
 
