@@ -30,7 +30,7 @@ phpap54="http://cn2.php.net/distributions/php-5.4.38.tar.gz|53ecd57da7b2243f8461
 
 apache22="http://mirror.bit.edu.cn/apache/httpd/httpd-2.2.29.tar.gz|7036a6eb5fb3b85be7a804255438b795"
 #re2c013
-re2c013rule=("yum -y install make tar gcc","[  -z `rpm -qa 're2c'` ] || break","./configure","make&&make install")
+re2c013rule=("yum -y install make tar gcc gcc-c++","[  -z `rpm -qa 're2c'` ] || break","./configure","make&&make install")
 #libmcrypt25
 libmcrypt25rule=("yum -y install make tar gcc gcc-c++","[  -z `rpm -qa 'libmcrypt'` ] || break","./configure","make&&make install")
 #nginx
