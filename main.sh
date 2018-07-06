@@ -15,6 +15,17 @@ mkDir ${installdir}
 mkDir ${sourcedir}
 mkDir ${compliedir}
 mkDir ${logdir}
+
+#检查基础命令
+#psmisc包含(killall)
+which make tar gcc wget killall 
+errnum=$?
+if [ ${errnum} -gt 0 ]
+then
+	yum -y install make tar gcc gcc-c++ wget psmisc
+fi
+
+
 #获取文件名，md5
 for v in ${run[*]}
 do
