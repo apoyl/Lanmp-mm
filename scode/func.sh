@@ -65,9 +65,18 @@ runSoft(){
    local _name=$1
    case "${_name}" in
 	"lnmp")
+	run=(re2c013 libmcrypt25 mysql57 php71 nginx114)
+	;;
+	"lnmpold")
 	run=(re2c013 libmcrypt25 mysql51 php54 nginx16)
 	;;
 	"lamp")
+	run=(mysql57 apache24 phpap71)
+	;;
+	"${_name}")
+	run=(${_name})
+	;;
+	"lampold")
 	run=(mysql51 apache22 phpap54)
 	;;
 	*)
