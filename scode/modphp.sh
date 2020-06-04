@@ -4,5 +4,14 @@
 # EMAIL:jar-c@163.com
 # COPYRIGHT © 2014-2015 apoyl.com  All rights reserved. 
 
-phpini="$installdir/php/etc/php.ini"
+
+phpversion=php
+
+if [ -n "$1" ]
+then
+        phpversion=$1
+fi
+
+
+phpini="$installdir/$phpversion/etc/php.ini"
 sed  -i "s:/data/www:$installdir/www:g" $phpini

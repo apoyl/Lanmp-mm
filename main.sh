@@ -2,7 +2,7 @@
 # BLOG SITE:http://www.apoyl.com
 # AUTHOR:(凹凸曼)lyc
 # EMAIL:jar-c@163.com
-# COPYRIGHT © 2014-2015 apoyl.com  All rights reserved. 
+# COPYRIGHT © 2014-2099 apoyl.com  All rights reserved. 
 
 source ./scode/config.sh
 source ./scode/func.sh

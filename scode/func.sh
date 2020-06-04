@@ -2,7 +2,7 @@
 # BLOG SITE:http://www.apoyl.com
 # AUTHOR:(凹凸曼)lyc
 # EMAIL:jar-c@163.com
-# COPYRIGHT © 2014-2015 apoyl.com  All rights reserved.
+# COPYRIGHT © 2014-2099 apoyl.com  All rights reserved.
 
 mkDir(){
    local _dirname=$1
@@ -64,14 +64,20 @@ downFile(){
 runSoft(){
    local _name=$1
    case "${_name}" in
-	"lnmp")
-	run=(re2c013 libmcrypt25 mysql57 php71 nginx114)
+	"lnmp7")
+	run=(re2c013 libmcrypt25 mysql57 php73 nginx114)
 	;;
-	"lnmpold")
+	"lnmp5")
 	run=(re2c013 libmcrypt25 mysql51 php54 nginx16)
 	;;
 	"lamp")
-	run=(mysql57 apache24 phpap71)
+	run=(mysql57 apache24 phpap73)
+	;;
+	"np")
+	run=(php73 nginx114)
+	;;
+	"ap")
+	run=(apr17 aprutil16 apache24 phpap73)
 	;;
 	"${_name}")
 	run=(${_name})
