@@ -2,13 +2,13 @@
 # BLOG SITE:http://www.apoyl.com
 # AUTHOR:(凹凸曼)lyc
 # EMAIL:jar-c@163.com
-# COPYRIGHT © 2014-2015 apoyl.com  All rights reserved. 
+# COPYRIGHT © 2014-2099 apoyl.com  All rights reserved. 
 
 #启动之前先干掉LAMP
-#kill -TERM `cat ${installdir}/apache2/logs/httpd.pid`
-${installdir}/apache2/bin/apachectl -k stop
+#kill -TERM `cat ${installdir}/apache24/logs/httpd.pid`
+${installdir}/apache24/bin/apachectl -k stop
 #sleep 1
-#kill -QUIT `cat ${installdir}/php/var/run/php-fpm.pid`
+#kill -QUIT `cat ${installdir}/php73/var/run/php-fpm.pid`
 sleep 1
 killall ${installdir}/mysql/bin/mysqld
 sleep 1
@@ -20,10 +20,10 @@ setColor green "MYSQL start ....."
 setColor green "MYSQL started successfully !"
 
 #setColor green "php-fpm start ......"
-#${installdir}/php/sbin/php-fpm || msgFail "PHP-FPM failed to start !"
+#${installdir}/php73/sbin/php-fpm || msgFail "PHP-FPM failed to start !"
 #setColor green "PHP-FPM started successfully !"
 
 setColor green "APACHE start ......"
-${installdir}/apache2/bin/apachectl -f ${installdir}/apache2/conf/httpd.conf || msgFail "APACHE failed to start !"
+${installdir}/apache24/bin/apachectl -f ${installdir}/apache24/conf/httpd.conf || msgFail "APACHE failed to start !"
 setColor green "APACHE started successfully !"
 	

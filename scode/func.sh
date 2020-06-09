@@ -71,7 +71,7 @@ runSoft(){
 	run=(re2c013 libmcrypt25 mysql51 php54 nginx16)
 	;;
 	"lamp")
-	run=(mysql57 apache24 phpap73)
+	run=(apr17 aprutil16 mysql57 apache24 phpap73)
 	;;
 	"np")
 	run=(php73 nginx114)
