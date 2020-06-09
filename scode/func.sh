@@ -64,7 +64,7 @@ downFile(){
 runSoft(){
    local _name=$1
    case "${_name}" in
-	"lnmp7")
+	"lnmp")
 	run=(re2c013 libmcrypt25 mysql57 php73 nginx114)
 	;;
 	"lnmp5")
