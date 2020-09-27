@@ -71,13 +71,13 @@ runSoft(){
 	run=(re2c013 libmcrypt25 mysql51 php54 nginx16)
 	;;
 	"lamp")
-	run=(apr17 aprutil16 mysql57 apache24 phpap73)
+	run=(re2c013 apr17 aprutil16 mysql57 apache24 phpap73)
 	;;
 	"np")
 	run=(php73 nginx114)
 	;;
 	"ap")
-	run=(apr17 aprutil16 apache24 phpap73)
+	run=(re2c013 apr17 aprutil16 libmcrypt25 apache24 phpap73)
 	;;
 	"${_name}")
 	run=(${_name})

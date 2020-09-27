@@ -5,7 +5,7 @@
 # COPYRIGHT © 2014-2099 apoyl.com  All rights reserved.
 
 #环境安装路径
-installdir=/apoyl/lanmp-mm
+installdir=/home/lanmp-mm
 pwddir=`pwd`
 sourcedir=${pwddir}/src
 compliedir=${pwddir}/complie
@@ -29,6 +29,8 @@ memcache40="https://pecl.php.net/get/memcache-4.0.5.2.tgz"
 nginx16="http://nginx.org/download/nginx-1.6.2.tar.gz"
 nginx114="http://nginx.org/download/nginx-1.14.0.tar.gz"
 
+nghttp2="https://github.com/nghttp2/nghttp2/releases/download/v1.41.0/nghttp2-1.41.0.tar.gz"
+
 mysql50="http://downloads.mysql.com/archives/get/file/mysql-5.0.96-linux-x86_64-glibc23.tar.gz|ec0897c53c8c325c816e0d045520939c"
 mysql51="http://downloads.mysql.com/archives/get/file/mysql-5.1.72-linux-x86_64-glibc23.tar.gz|e717f71e8c780c422af26847bf64e99a"
 mysql57="https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.22-linux-glibc2.12-x86_64.tar.gz|9ef7a05695f8b4ea29f8d077c3b415e2"
@@ -37,20 +39,23 @@ php54="http://cn2.php.net/distributions/php-5.4.38.tar.gz|53ecd57da7b2243f8461e4
 phpap54="http://cn2.php.net/distributions/php-5.4.38.tar.gz|53ecd57da7b2243f8461e4fb8ce689a6"
 #sha256
 php71="http://am1.php.net/distributions/php-7.1.19.tar.gz|e1ae477b72bed02cdcb04f0157b8f8767bd4f6030416ae06408b4f6d85ee66a1"
-php73="https://www.php.net/distributions/php-7.3.18.tar.gz|3211d5d6ea8a27c2794498a551bf26e334bc2b986741971809c9bb650eaa47a3"
-phpap73="https://www.php.net/distributions/php-7.3.18.tar.gz|3211d5d6ea8a27c2794498a551bf26e334bc2b986741971809c9bb650eaa47a3"
+php73="https://www.php.net/distributions/php-7.3.22.tar.gz|759426cb4054e3f23316c39710faff0bb8063fd0ea50fc2c5efa590429af1a22"
+phpap73="https://www.php.net/distributions/php-7.3.22.tar.gz|759426cb4054e3f23316c39710faff0bb8063fd0ea50fc2c5efa590429af1a22"
 
 apache22="http://mirror.bit.edu.cn/apache/httpd/httpd-2.2.29.tar.gz|7036a6eb5fb3b85be7a804255438b795"
-apache24="https://mirror.bit.edu.cn/apache//httpd/httpd-2.4.43.tar.gz|2624e92d89b20483caeffe514a7c7ba93ab13b650295ae330f01c35d5b50d87f"
+apache24="https://mirrors.bfsu.edu.cn/apache//httpd/httpd-2.4.46.tar.gz|2624e92d89b20483caeffe514a7c7ba93ab13b650295ae330f01c35d5b50d87f"
 
 #re2c013
 re2c013rule=("yum -y install make tar gcc gcc-c++","[  -z `rpm -qa 're2c'` ] || break","./configure","make&&make install")
 #libmcrypt25
 libmcrypt25rule=("yum -y install make tar gcc gcc-c++","[  -z `rpm -qa 'libmcrypt'` ] || break","./configure","make&&make install")
+
+#nghttp2
+nghttp2rule=("yum -y install make tar gcc gcc-c++","[  -z `rpm -qa 'nghttp2'` ] || break","./configure","make&&make install")
 #apr17
 apr17rule=("yum -y install make tar gcc gcc-c++","./configure --prefix=${installdir}/apr17","make&&make install")
 #aprutil16
-aprutil16rule=("yum -y install make tar gcc gcc-c++","./configure --prefix=${installdir}/aprutil16 --with-apr=${installdir}/apr17","make&&make install")
+aprutil16rule=("yum -y install make tar gcc gcc-c++ expat-devel","./configure --prefix=${installdir}/aprutil16 --with-apr=${installdir}/apr17","make&&make install")
 #memcache
 memcache40rule=("yum -y install make tar gcc gcc-c++","${installdir}/php73/bin/phpize","./configure --with-php-config=${installdir}/php73/bin/php-config","make&&make install")
 
@@ -62,7 +67,7 @@ nginx114rule=("yum -y install make tar gcc libtool* zlib-devel pcre-devel","./co
 #apache22
 apache22rule=("yum -y install make tar gcc gcc-c++ libtool* zlib-devel ntp perl apr apr-util","./configure --prefix=${installdir}/apache2 --enable-so --enable-rewrite","make&&make install","mkdir -p ${sitedir}","cp ${etcdir}/index.php ${sitedir}","cp ${installdir}/apache2/conf/httpd.conf ${installdir}/apache2/conf/httpdbak.conf","source ../../../scode/modhttpd.sh")
 #apache24
-apache24rule=("yum -y install make tar gcc gcc-c++ libtool* zlib-devel ntp perl apr apr-util","./configure --prefix=${installdir}/apache24 --enable-so --enable-rewrite --with-crypto --with-apr=${installdir}/apr17 --with-apr-util=${installdir}/aprutil16","make&&make install","mkdir -p ${sitedir}","cp ${etcdir}/index.php ${sitedir}","cp ${installdir}/apache24/conf/httpd.conf ${installdir}/apache24/conf/httpdbak.conf","source ../../../scode/modhttpd.sh apache24")
+apache24rule=("yum -y install make tar gcc gcc-c++ libtool* zlib-devel  perl apr apr-util pcre-devel curl-devel openssl-devel","./configure --prefix=${installdir}/apache24 --enable-so --enable-rewrite --with-crypto --with-apr=${installdir}/apr17 --with-apr-util=${installdir}/aprutil16","make&&make install","mkdir -p ${sitedir}","cp ${etcdir}/index.php ${sitedir}","cp ${installdir}/apache24/conf/httpd.conf ${installdir}/apache24/conf/httpdbak.conf","source ../../../scode/modhttpd.sh apache24")
 
 #mysql模板
 mysql50rule=("yum -y install tar","mkdir -p ${installdir}/mysql && cp -rp ./ ${installdir}/mysql","source ../../../scode/modmysql.sh","groupadd mysql ||echo 0","useradd  -r -g  mysql mysql || echo 0"," usermod -s /sbin/nologin mysql","cd ${installdir}/mysql","chown -R mysql:mysql .","cp ${etcdir}/my-large.cnf ./my.cnf","mkdir -p ${dbdir} && ./scripts/mysql_install_db --user=mysql --datadir=${dbdir} --defaults-file=${installdir}/mysql/my.cnf","chown -R root:root . && chown -R  mysql:mysql ${dbdir}")
@@ -152,12 +157,12 @@ phpap71rule=("yum -y install make tar gcc gcc-c++ libtool*   openssl openssl-dev
         ","make  && make install","cp ${etcdir}/php7.ini ${installdir}/php/etc/php.ini","source ../../../scode/modphp.sh")
 
 #php73+apache24
-phpap73rule=("yum -y install make tar gcc gcc-c++ libtool*   openssl openssl-devel sed flex bison m4 autoconf automake gd-devel libjpeg-devel freetype-devel fontconfig-devel libpng-devel libtiff-devel libmcrypt-devel pcre-devel zlib-devel libevent-devel bzip2-devel php-mbstring libxml2 libxml2-devel","./configure --prefix=${installdir}/php73  \
+phpap73rule=("yum -y install make tar gcc gcc-c++ libtool* expat-devel  openssl openssl-devel sed flex bison m4 autoconf automake gd-devel libjpeg-devel freetype-devel fontconfig-devel libpng-devel libtiff-devel  pcre-devel zlib-devel libevent-devel bzip2-devel php-mbstring libxml2 libxml2-devel","./configure --prefix=${installdir}/php73  \
         --with-config-file-path=${installdir}/php73/etc \
         --with-mysqli \
 	--with-apxs2=${installdir}/apache24/bin/apxs \
 	--with-openssl \
-        --with-gd  --enable-gd-jisi-conv \
+	--with-gd  --enable-gd-jisi-conv \
         --with-png-dir --with-jpeg-dir \
         --with-freetype-dir --with-iconv-dir \
         --with-zlib-dir --enable-ftp \
