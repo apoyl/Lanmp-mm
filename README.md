@@ -5,9 +5,9 @@ Lanmp-mm 是基于Shell 语言编写的，能在linux环境下自动安装Apache
 	
 1、安装之前须知		
 
-	默认环境安装路径：/apoyl/lanmp-mm
-	默认数据库位置：/apoyl/lanmp-mm/db/mysql
-	默认站点：/apoyl/lanmp-mm/www/localhost
+	默认环境安装路径：/home/lanmp-mm
+	默认数据库位置：/home/lanmp-mm/db/mysql
+	默认站点：/home/lanmp-mm/www/localhost
 	远程安装为防止终端超时，请先安装Screen
 
 2、运行安装
