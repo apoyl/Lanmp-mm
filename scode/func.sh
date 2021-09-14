@@ -65,19 +65,25 @@ runSoft(){
    local _name=$1
    case "${_name}" in
 	"lnmp")
+	run=(re2c013 libmcrypt25 oniguruma6 mysql57 php74 nginx120)
+	;;
+	"lnmp73")
 	run=(re2c013 libmcrypt25 mysql57 php73 nginx114)
 	;;
 	"lnmp5")
 	run=(re2c013 libmcrypt25 mysql51 php54 nginx16)
 	;;
 	"lamp")
-	run=(re2c013 apr17 aprutil16 mysql57 apache24 phpap73)
+	run=(re2c013 apr17 aprutil16 cur17 oniguruma6  mysql57 apache24 phpap74)
 	;;
 	"np")
-	run=(php73 nginx114)
+	run=(php74 nginx120)
 	;;
 	"ap")
-	run=(re2c013 apr17 aprutil16 libmcrypt25 apache24 phpap73)
+	run=(re2c013 apr17 aprutil16 oniguruma6 curl7 apache24 phpap74)
+	;;
+	"ap73")
+	run=(re2c013 apr17 aprutil16 libmcrypt25 curl7 apache24 phpap73)
 	;;
 	"${_name}")
 	run=(${_name})
