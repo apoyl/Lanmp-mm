@@ -27,13 +27,14 @@ aprutil16="https://mirrors.bfsu.edu.cn/apache//apr/apr-util-1.6.1.tar.gz"
 memcache40="https://pecl.php.net/get/memcache-4.0.5.2.tgz"
 #curl
 curl7="https://curl.se/download/curl-7.76.1.tar.gz"
-
-oniguruma6="https://github.com/kkos/oniguruma/releases/download/v6.9.7.1/onig-6.9.7.1.tar.gz"
+oniguruma6="https://github.com/kkos/oniguruma/releases/download/v6.9.8/onig-6.9.8.tar.gz"
+#redis
+redis53="https://pecl.php.net/get/redis-5.3.7.tgz"
 
 nginx16="http://nginx.org/download/nginx-1.6.2.tar.gz"
 nginx114="http://nginx.org/download/nginx-1.14.0.tar.gz"
-
 nginx120="http://nginx.org/download/nginx-1.20.1.tar.gz"
+nginx122="http://nginx.org/download/nginx-1.22.1.tar.gz"
 
 
 nghttp2="https://github.com/nghttp2/nghttp2/releases/download/v1.44.0/nghttp2-1.44.0.tar.gz"
@@ -41,6 +42,7 @@ nghttp2="https://github.com/nghttp2/nghttp2/releases/download/v1.44.0/nghttp2-1.
 mysql50="http://downloads.mysql.com/archives/get/file/mysql-5.0.96-linux-x86_64-glibc23.tar.gz|ec0897c53c8c325c816e0d045520939c"
 mysql51="http://downloads.mysql.com/archives/get/file/mysql-5.1.72-linux-x86_64-glibc23.tar.gz|e717f71e8c780c422af26847bf64e99a"
 mysql57="https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.22-linux-glibc2.12-x86_64.tar.gz|9ef7a05695f8b4ea29f8d077c3b415e2"
+mysql80="https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.31-linux-glibc2.12-x86_64.tar.xz|89e902edeb75216c366e878f3c9e85be"
 
 php54="http://cn2.php.net/distributions/php-5.4.38.tar.gz|53ecd57da7b2243f8461e4fb8ce689a6"
 phpap54="http://cn2.php.net/distributions/php-5.4.38.tar.gz|53ecd57da7b2243f8461e4fb8ce689a6"
@@ -50,9 +52,12 @@ php73="https://www.php.net/distributions/php-7.3.22.tar.gz|759426cb4054e3f23316c
 phpap73="https://www.php.net/distributions/php-7.3.22.tar.gz|759426cb4054e3f23316c39710faff0bb8063fd0ea50fc2c5efa590429af1a22"
 php74="https://www.php.net/distributions/php-7.4.23.tar.gz|2aaa481678ad4d2992e7bcf161e0e98c7268f4979f7ca8b3d97dd6de19c205d6"
 phpap74="https://www.php.net/distributions/php-7.4.23.tar.gz|2aaa481678ad4d2992e7bcf161e0e98c7268f4979f7ca8b3d97dd6de19c205d6"
+php81="https://www.php.net/distributions/php-8.1.14.tar.gz|4755af2563ad187ceaf4a3632359c55e3f3be4050e0299e0f713bbb5e0531965"
+phpap81="https://www.php.net/distributions/php-8.1.14.tar.gz|4755af2563ad187ceaf4a3632359c55e3f3be4050e0299e0f713bbb5e0531965"
+
 
 apache22="http://mirror.bit.edu.cn/apache/httpd/httpd-2.2.29.tar.gz|7036a6eb5fb3b85be7a804255438b795"
-apache24="https://mirrors.bfsu.edu.cn/apache//httpd/httpd-2.4.48.tar.gz|315c0bc50206b866fb17c2cdc28c1973765a8d59ca168b80286e8cb077d0510e"
+apache24="https://mirrors.bfsu.edu.cn/apache//httpd/httpd-2.4.55.tar.gz|315c0bc50206b866fb17c2cdc28c1973765a8d59ca168b80286e8cb077d0510e"
 
 #re2c013
 re2c013rule=("yum -y install make tar gcc gcc-c++","[  -z `rpm -qa 're2c'` ] || break","./configure","make&&make install")
@@ -73,6 +78,9 @@ curl7rule=("yum -y install make tar gcc gcc-c++","./configure --prefix=${install
 
 #oniguruma
 oniguruma6rule=("yum -y install make tar gcc gcc-c++","./configure --prefix=${installdir}/oniguruma6 --libdir=/lib64","make&&make install")
+#redis php81
+redis53rule=("yum -y install make tar gcc gcc-c++","${installdir}/php81/bin/phpize","./configure --with-php-config=${installdir}/php81/bin/php-config","make&&make install")
+
 
 #nginx16
 nginx16rule=("yum -y install make tar gcc libtool* zlib-devel pcre-devel","./configure --prefix=${installdir}/nginx  --with-http_realip_module  --with-http_addition_module  --with-http_sub_module --with-http_secure_link_module  --with-http_gzip_static_module  --with-http_stub_status_module  --without-http_ssi_module --with-pcre","make && make install","mkdir -p ${sitedir} ","echo 'yes' | cp  ${etcdir}/nginx.conf ${installdir}/nginx/conf/nginx.conf","source ../../../scode/modnginx.sh","cp ${etcdir}/index.php ${sitedir} && groupadd www || echo 0 && useradd -r  -g www www ||echo 0","usermod -s /sbin/nologin www")
@@ -80,6 +88,9 @@ nginx16rule=("yum -y install make tar gcc libtool* zlib-devel pcre-devel","./con
 nginx114rule=("yum -y install make tar gcc libtool* zlib-devel pcre-devel","./configure --prefix=${installdir}/nginx  --with-http_realip_module  --with-http_addition_module  --with-http_sub_module --with-http_secure_link_module  --with-http_gzip_static_module  --with-http_stub_status_module  --without-http_ssi_module --with-pcre --with-http_ssl_module","make && make install","mkdir -p ${sitedir} ","echo 'yes' | cp  ${etcdir}/nginx.conf ${installdir}/nginx/conf/nginx.conf","source ../../../scode/modnginx.sh","cp ${etcdir}/index.php ${sitedir} && groupadd www || echo 0 && useradd -r  -g www www ||echo 0","usermod -s /sbin/nologin www")
 #nginx120
 nginx120rule=("yum -y install make tar gcc libtool* zlib-devel pcre-devel","./configure --prefix=${installdir}/nginx  --with-http_realip_module  --with-http_addition_module  --with-http_sub_module --with-http_secure_link_module  --with-http_gzip_static_module  --with-http_stub_status_module  --without-http_ssi_module --with-pcre --with-http_ssl_module","make && make install","mkdir -p ${sitedir} ","echo 'yes' | cp  ${etcdir}/nginx.conf ${installdir}/nginx/conf/nginx.conf","source ../../../scode/modnginx.sh","cp ${etcdir}/index.php ${sitedir} && groupadd www || echo 0 && useradd -r  -g www www ||echo 0","usermod -s /sbin/nologin www")
+#nginx122
+nginx122rule=("yum -y install make tar gcc libtool* zlib-devel pcre-devel","./configure --prefix=${installdir}/nginx  --with-http_realip_module  --with-http_addition_module  --with-http_sub_module --with-http_secure_link_module  --with-http_gzip_static_module  --with-http_stub_status_module  --without-http_ssi_module --with-pcre --with-http_ssl_module","make && make install","mkdir -p ${sitedir} ","echo 'yes' | cp  ${etcdir}/nginx.conf ${installdir}/nginx/conf/nginx.conf","source ../../../scode/modnginx.sh","cp ${etcdir}/index.php ${sitedir} && groupadd www || echo 0 && useradd -r  -g www www ||echo 0","usermod -s /sbin/nologin www")
+
 
 
 #apache22
@@ -91,6 +102,9 @@ apache24rule=("yum -y install make tar gcc gcc-c++ libtool* zlib-devel  perl apr
 mysql50rule=("yum -y install tar","mkdir -p ${installdir}/mysql && cp -rp ./ ${installdir}/mysql","source ../../../scode/modmysql.sh","groupadd mysql ||echo 0","useradd  -r -g  mysql mysql || echo 0"," usermod -s /sbin/nologin mysql","cd ${installdir}/mysql","chown -R mysql:mysql .","cp ${etcdir}/my-large.cnf ./my.cnf","mkdir -p ${dbdir} && ./scripts/mysql_install_db --user=mysql --datadir=${dbdir} --defaults-file=${installdir}/mysql/my.cnf","chown -R root:root . && chown -R  mysql:mysql ${dbdir}")
 mysql51rule=("yum -y install tar","mkdir -p ${installdir}/mysql && cp -rp ./ ${installdir}/mysql","source ../../../scode/modmysql.sh","groupadd mysql ||echo 0","useradd  -r -g  mysql mysql || echo 0","usermod -s /sbin/nologin mysql","cd ${installdir}/mysql","chown -R mysql:mysql .","cp ${etcdir}/my-large.cnf ./my.cnf","mkdir -p ${dbdir} && ./scripts/mysql_install_db --user=mysql --datadir=${dbdir} --defaults-file=${installdir}/mysql/my.cnf","chown -R root:root . && chown -R  mysql:mysql ${dbdir}")
 mysql57rule=("yum -y install tar","mkdir -p ${installdir}/mysql && cp -rp ./ ${installdir}/mysql","groupadd mysql ||echo 0","useradd  -r -g  mysql mysql || echo 0","usermod -s /sbin/nologin mysql","cd ${installdir}/mysql","chown -R mysql:mysql .","cp ${etcdir}/my-large-57.cnf ./my.cnf","mkdir -p ${dbdir} && ./bin/mysqld --initialize-insecure --user=mysql  --basedir=${installdir}/mysql --datadir=${dbdir}   --explicit_defaults_for_timestamp","chown -R root:root . && chown -R  mysql:mysql ${dbdir}")
+mysql80rule=("yum -y install tar","mkdir -p ${installdir}/mysql && cp -rp ./ ${installdir}/mysql","groupadd mysql ||echo 0","useradd  -r -g  mysql mysql || echo 0","usermod -s /sbin/nologin mysql","cd ${installdir}/mysql","chown -R mysql:mysql .","cp ${etcdir}/my-large-80.cnf ./my.cnf","mkdir -p ${dbdir} && ./bin/mysqld --initialize-insecure --user=mysql  --basedir=${installdir}/mysql --datadir=${dbdir}   --explicit_defaults_for_timestamp","chown -R root:root . && chown -R  mysql:mysql ${dbdir}")
+
+
 
 #php54+nginx
 php54rule=("yum -y install make tar gcc gcc-c++ libtool*  sed flex bison m4 autoconf automake gd-devel libjpeg-devel freetype-devel fontconfig-devel libpng-devel libtiff-devel libmcrypt-devel pcre-devel zlib-devel libevent-devel bzip2-devel php-mbstring libxml2 libxml2-devel","./configure --prefix=${installdir}/php  \
@@ -155,6 +169,22 @@ php74rule=("yum -y install make tar gcc gcc-c++ libtool* openssl openssl-devel s
         --enable-pdo  --with-pdo-mysql --enable-opcache --enable-fpm \
 	","make && make install","cp ${etcdir}/php7.ini ${installdir}/php74/etc/php.ini &&  cp ${etcdir}/php-fpm.conf ${installdir}/php74/etc/php-fpm.conf #&& cp ./sapi/fpm/php-fpm ${installdir}/php74/bin","source ../../../scode/modphp.sh php74","groupadd www || echo 0 && useradd -r  -g www www || echo 0 ","usermod -s /sbin/nologin www")
 
+
+#php81+nginx
+php81rule=("yum -y install make tar gcc gcc-c++ libtool* openssl openssl-devel sed flex bison m4 autoconf automake gd-devel libjpeg-devel freetype-devel fontconfig-devel libpng-devel libtiff-devel  pcre-devel zlib-devel libevent-devel bzip2-devel php-mbstring libxml2 libxml2-devel sqlite-devel","./configure --prefix=${installdir}/php81  \
+        --with-config-file-path=${installdir}/php81/etc \
+        --with-mysqli \
+	--with-openssl \
+        --enable-gd --enable-gd-jis-conv \
+        --with-jpeg \
+        --with-freetype \
+        --with-zlib-dir --enable-ftp \
+        --with-bz2 --enable-mbstring \
+         --enable-sockets --enable-exif \
+        --disable-debug  --enable-pcntl \
+        --enable-sigchild  --enable-sysvmsg \
+        --enable-pdo  --with-pdo-mysql --enable-opcache --enable-fpm \
+	","make && make install","cp ${etcdir}/php8.ini ${installdir}/php81/etc/php.ini &&  cp ${etcdir}/php-fpm.conf ${installdir}/php81/etc/php-fpm.conf #&& cp ./sapi/fpm/php-fpm ${installdir}/php81/bin","source ../../../scode/modphp.sh php81","groupadd www || echo 0 && useradd -r  -g www www || echo 0 ","usermod -s /sbin/nologin www")
 
 
 #php54+apache22
@@ -230,4 +260,25 @@ phpap74rule=("yum -y install make tar gcc gcc-c++ libtool* expat-devel  openssl 
         --enable-pdo  --with-pdo-mysql --enable-opcache \
 	--with-curl \
         ","make  && make install","mkdir ${installdir}/php74/etc/&&cp ${etcdir}/php7.ini ${installdir}/php74/etc/php.ini","source ../../../scode/modphp.sh php74")
+
+#php81+apache24
+phpap81rule=("yum -y install make tar gcc gcc-c++ libtool* expat-devel  openssl openssl-devel sed flex bison m4 autoconf automake gd-devel libpng libpng-devel libjpeg-devel freetype-devel fontconfig-devel libpng-devel libtiff-devel  pcre-devel zlib-devel libevent-devel bzip2-devel php-mbstring libxml2 libxml2-devel sqlite-devel","./configure --prefix=${installdir}/php81  \
+        --with-config-file-path=${installdir}/php81/etc \
+        --with-mysqli \
+	--with-apxs2=${installdir}/apache24/bin/apxs \
+	--with-openssl \
+	--enable-gd  \
+	--with-jpeg \
+	--with-webp \
+        --with-freetype \
+	--with-iconv-dir \
+        --with-zlib-dir \
+	--enable-ftp \
+	--disable-ipv6 --with-bz2 --enable-mbstring \
+        --with-libxml --enable-sockets --enable-exif \
+        --disable-debug  --enable-pcntl \
+        --enable-sigchild  --enable-sysvmsg \
+        --enable-pdo  --with-pdo-mysql --enable-opcache \
+	--with-curl \
+        ","make  && make install","mkdir ${installdir}/php81/etc/&&cp ${etcdir}/php8.ini ${installdir}/php81/etc/php.ini","source ../../../scode/modphp.sh php81")
 

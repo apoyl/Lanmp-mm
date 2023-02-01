@@ -1,0 +1,69 @@
+[client]
+port=3306
+socket = /tmp/mysql.sock
+[mysql]
+default-character-set=utf8
+
+[mysqld]
+port=3306
+socket		= /tmp/mysql.sock
+user=mysql
+character_set_server = UTF8MB4
+skip_name_resolve = 1
+#若你的MySQL数据库主要运行在境外，请务必根据实际情况调整本参数
+default_time_zone = "+8:00"
+
+default-storage-engine=INNODB
+#支持 INNODB 引擎模式。修改为　default-storage-engine=INNODB　即可。
+#如果 INNODB 模式如果不能启动，删除data目录下ib开头的日志文件重新启动。
+
+#sql-mode=NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+#key_buffer = 256M
+max_allowed_packet = 1M
+#table_cache = 256
+sort_buffer_size = 1M
+read_buffer_size = 1M
+read_rnd_buffer_size = 4M
+myisam_sort_buffer_size = 64M
+thread_cache_size = 8
+#query_cache_size= 16M
+# Try number of CPU's*2 for thread_concurrency
+#thread_concurrency = 8
+
+max-connections=1024
+max-connect-errors=10000000000000
+wait-timeout=10
+
+
+log-bin=mysql-bin
+server-id=1
+binlog-ignore-db = mysql,test,information_schema
+max_binlog_size = 1024M
+binlog_expire_logs_seconds=16070400
+binlog_cache_size = 4M
+max_binlog_cache_size = 512M
+
+
+[mysqldump]
+quick
+max_allowed_packet = 16M
+
+[mysql]
+no-auto-rehash
+# Remove the next comment character if you are not familiar with SQL
+#safe-updates
+
+[isamchk]
+key_buffer = 128M
+sort_buffer_size = 128M
+read_buffer = 2M
+write_buffer = 2M
+
+[myisamchk]
+key_buffer = 128M
+sort_buffer_size = 128M
+read_buffer = 2M
+write_buffer = 2M
+
+[mysqlhotcopy]
+interactive-timeout

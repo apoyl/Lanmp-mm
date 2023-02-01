@@ -7,7 +7,7 @@
 #启动之前先干掉LNMP
 ${installdir}/nginx/sbin/nginx -s stop
 sleep 1
-kill -QUIT `cat ${installdir}/php/var/run/php-fpm.pid`
+kill -QUIT `cat ${installdir}/var/run/php-fpm.pid`
 sleep 1
 killall ${installdir}/mysql/bin/mysqld
 sleep 1
@@ -19,7 +19,7 @@ setColor green "MYSQL start ....."
 setColor green "MYSQL started successfully !"
 
 setColor green "php-fpm start ......"
-${installdir}/php/sbin/php-fpm || msgFail "PHP-FPM failed to start !"
+${installdir}/sbin/php-fpm || msgFail "PHP-FPM failed to start !"
 setColor green "PHP-FPM started successfully !"
 
 setColor green "NGINX start ......"

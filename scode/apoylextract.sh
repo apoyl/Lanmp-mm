@@ -14,6 +14,8 @@ case "$2" in
 		bunzip2 "$1";;
 	"$1: gzip compressed"*)
 		ggzip $1 ${_dir};;
+	"$1: XZ compressed"*)
+		ggzip $1 ${_dir};;
 	"$1: POSIX tar"*)
 		tar -xvf "$1";;
 	"$1: Zip archive"*)
@@ -29,11 +31,14 @@ esac
 ggzip(){
 	local _file=$1
 	local _dir=$2
-	na=$(awk -v argone=${_file} 'BEGIN{split(argone,name,".")}END{print name[2]}' /dev/null)
+	#na=$(awk -v argone=${_file} 'BEGIN{split(argone,name,".")}END{print name[2]}' /dev/null)
+	na=$(echo ${_file} | sed 's/^.*\.//')
 	if [ x"$na" = x"tar" ];then
 		tar -zxvf "${_file}"
 	elif [ x"$na" = x"gz" ];then
                 gunzip "${_file}"
+	elif [ x"$na" = x"xz" ];then 
+		tar -xvf "${_file}" -C ${_dir}
 	else
 		tar -zxvf "${_file}" -C ${_dir}
 	fi
