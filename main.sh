@@ -48,7 +48,8 @@ do
 	setColor green "${compliename}--Unzip the file to the end"	
 	#进入预编译目录
 	setColor green "${compliename}--To begin precomplied software and install software......"
-	cd ${compliedir}/${compliename}/* 
+	firstdir=($(ls -l ${compliedir}/${compliename}/ |awk '/^d/ {print $NF}'))
+	cd ${compliedir}/${compliename}/$firstdir/
 	#echo  ${compliedir}/${compliename}/* 
 	cleng=`echo $srule|grep -o ","|wc -l`
 	
