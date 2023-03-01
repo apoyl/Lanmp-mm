@@ -65,7 +65,7 @@ runSoft(){
    local _name=$1
    case "${_name}" in
 	"lnmp")
-	run=(re2c013 libmcrypt25 oniguruma6 mysql80 php81 nginx122)
+	run=(libmcrypt25 oniguruma6 mysql80 php81 nginx122)
 	;;
 	"lnmp74")
 	run=(re2c013 libmcrypt25 oniguruma6 mysql57 php74 nginx120)

@@ -19,7 +19,7 @@ setColor green "MYSQL start ....."
 setColor green "MYSQL started successfully !"
 
 setColor green "php-fpm start ......"
-${installdir}/sbin/php-fpm || msgFail "PHP-FPM failed to start !"
+${installdir}/php81/sbin/php-fpm || msgFail "PHP-FPM failed to start !"
 setColor green "PHP-FPM started successfully !"
 
 setColor green "NGINX start ......"

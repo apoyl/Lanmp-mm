@@ -29,25 +29,26 @@ esac
 }
 
 ggzip(){
-	local _file=$1
-	local _dir=$2
-	#na=$(awk -v argone=${_file} 'BEGIN{split(argone,name,".")}END{print name[2]}' /dev/null)
-	na=$(echo ${_file} | sed 's/^.*\.//')
-	nanew=$(echo ${_file: -6})
+        local _file=$1
+        local _dir=$2
+        #na=$(awk -v argone=${_file} 'BEGIN{split(argone,name,".")}END{print name[2]}' /dev/null)
+        na=$(echo ${_file} | sed 's/^.*\.//')
+        nanew=$(echo ${_file: -6})
 
-        if [ x"$nanew"=x"tar.gz" ];then
+        if [ x"$nanew" = x"tar.gz" ];then
                 tar -zxvf "${_file}"  -C ${_dir}
-	elif [ x"$na" = x"tar" ];then
-		tar -xvf "${_file}"  -C ${_dir} 
-	elif [ x"$na" = x"gz" ];then
+        elif [ x"$nanew" = x"tar.xz" ];then
+                tar -xvf "${_file}"  -C ${_dir}
+        elif [ x"$na" = x"tar" ];then
+                tar -zxvf "${_file}"  -C ${_dir}
+        elif [ x"$na" = x"gz" ];then
                 gunzip "${_file}" -c ${_dir}
-	elif [ x"$na" = x"xz" ];then 
-		tar -xvf "${_file}" -C ${_dir}
-	else
-		tar -zxvf "${_file}" -C ${_dir}
-	fi
+        else
+                tar -zxvf "${_file}" -C ${_dir}
+        fi
 
 }
+
 help(){
 cat << HELP
 	DECOMPRESSION TOOL :apoylextract.sh
