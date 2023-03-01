@@ -33,10 +33,14 @@ ggzip(){
 	local _dir=$2
 	#na=$(awk -v argone=${_file} 'BEGIN{split(argone,name,".")}END{print name[2]}' /dev/null)
 	na=$(echo ${_file} | sed 's/^.*\.//')
-	if [ x"$na" = x"tar" ];then
-		tar -zxvf "${_file}"
+	nanew=$(echo ${_file: -6})
+
+        if [ x"$nanew"=x"tar.gz" ];then
+                tar -zxvf "${_file}"  -C ${_dir}
+	elif [ x"$na" = x"tar" ];then
+		tar -xvf "${_file}"  -C ${_dir} 
 	elif [ x"$na" = x"gz" ];then
-                gunzip "${_file}"
+                gunzip "${_file}" -c ${_dir}
 	elif [ x"$na" = x"xz" ];then 
 		tar -xvf "${_file}" -C ${_dir}
 	else
